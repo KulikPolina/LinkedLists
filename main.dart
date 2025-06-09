@@ -1,17 +1,27 @@
+import 'dart:collection';
+
 void main(){
   final myList= LinkedList<String>();
 
   myList.addFirst("hey");
   myList.addLast("hello");
   myList.addFirst("hi");
-  myList.printList();
+  //myList.printList();
+
+  for(var item in myList){
+    print(item);
+  }
 
   final myListWithNums = LinkedListWithOnlyNums<int>();
 
   myListWithNums.addFirst(1);
   myListWithNums.addLast(2);
   myListWithNums.addFirst(3);
-  myListWithNums.printList();
+  //myListWithNums.printList();
+
+  for(var item in myListWithNums){
+    print(item);
+  }
 
 }
 
@@ -84,6 +94,35 @@ mixin MethodsForLinkedLists<T> {
   }
 }
 
-class LinkedList<T> with MethodsForLinkedLists{}
+class IteratorForLinkedLists<T> implements Iterator<T>{
+  Node<T>? _currentNode;
+  Node<T>? _start;
+  T? _currentValue;
 
-class LinkedListWithOnlyNums<T extends num> with MethodsForLinkedLists{}
+  IteratorForLinkedLists(this._start){
+    _currentNode = _start;
+  }
+
+  @override
+  T get current => _currentValue as T;
+
+  @override
+  bool moveNext() {
+    if(_currentNode == null) return false;
+
+    _currentValue = _currentNode!.value;
+    _currentNode = _currentNode!.next;
+    return true;
+  }
+}
+
+class LinkedList<T> with MethodsForLinkedLists<T>, IterableMixin<T>{
+  @override
+  Iterator<T> get iterator => IteratorForLinkedLists<T>(head);
+
+}
+
+class LinkedListWithOnlyNums<T extends num> with MethodsForLinkedLists<T>, IterableMixin<T>{
+  @override
+  Iterator<T> get iterator => IteratorForLinkedLists<T>(head);
+}
