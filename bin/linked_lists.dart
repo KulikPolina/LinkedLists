@@ -1,4 +1,4 @@
-import '../linked_queue.dart';
+import '../lib/linked_queue.dart';
 
 void main(){
   final newQueue = LinkedQueue<int>();

@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import '../linked_queue.dart';
+import '../lib/linked_queue.dart';
 
 void main() {
   group('LinkedQueue Standard Operations', () {
